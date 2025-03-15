@@ -3,10 +3,10 @@
 @tailwind utilities;
 
 :root {
-    --body-bg: var(--p-surface-50);
+    --body-bg: var(--p-surface-100);
     --body-text-color: var(--p-surface-900);
     --card-border: 1px solid var(--border-color);
-    --card-bg: var(--p-primary-50);
+    --card-bg: var(--p-surface-0);
     --border-color: var(--p-surface-200);
     --text-color: var(--p-surface-700);
     --overlay-background: #ffffff;
@@ -57,19 +57,12 @@ body {
     border-radius: 0px;
 }
 
-.header-menubar {
-    background-color: var(--card-bg) !important;
+.header-title {
+    color: var(--p-primary-500)
 }
 
-.title {
-    display: flex;
-    align-items: center;
-    width: 100%;
-    height: var(--vp-nav-height);
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--vp-c-text-1);
-    transition: opacity .25s
+.header-menubar {
+    background-color: var(--card-bg) !important;
 }
 
 .setting-item {
@@ -78,5 +71,4 @@ body {
 
 .setting-item-right-select {
     line-height: 1.5em;
-    width: 300%;
 }

@@ -1,4 +1,4 @@
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 
 export const camera_settings = reactive({
     settings: [
@@ -74,3 +74,54 @@ export const camera_settings = reactive({
         }
     ]
 })
+
+const camera_settings_api_url = 'http://127.0.0.1:5000/api/v1/camera_settings'
+const camera_settings_api_url_get = 'http://127.0.0.1:5000/api/v1/camera_settings/get'
+const camera_settings_api_url_set = 'http://127.0.0.1:5000/api/v1/camera_settings/set'
+
+const setCameraSettings = async (settings) => {
+    try {
+        const response = await fetch(camera_settings_api_url_set, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(settings)
+        })
+        const data = await response.json()
+        console.log(data)
+    } catch (error) {
+        console.error(error)
+    }
+}
+
+export const onCameraSettingChange = async (name, value) => {
+    await setCameraSettings({
+        settings: [{
+            name: name,
+            value: value
+        }]
+    })
+}
+
+const interval_id = ref()
+
+export const cameraSettingGetterSetupFunc = () => {
+    interval_id.value = setInterval(() => {
+        try {
+            fetch(camera_settings_api_url_get)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    camera_settings.settings = data
+                })
+        }
+        catch (error) {
+            console.error(error)
+        }
+    }, 1000)
+}
+
+export const cameraSettingGetterCleanupFunc = () => {
+    clearInterval(interval_id.value)
+}

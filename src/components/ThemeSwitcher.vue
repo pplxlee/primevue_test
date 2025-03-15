@@ -67,6 +67,7 @@ import { $t, updatePreset, updateSurfacePalette } from '@primeuix/themes';
 import Aura from '@primeuix/themes/aura';
 import Lara from '@primeuix/themes/lara';
 import Nora from '@primeuix/themes/nora';
+// import { data } from 'autoprefixer';
 
 const presets = {
     Aura,
@@ -651,6 +652,14 @@ export default {
         rippleActive() {
             return this.$primevue.config.ripple;
         }
-    }
+    },
+    created() {
+        this.updateColors('primary', this.primaryColors[10]);
+    },
+    // mounted() {
+    //     console.log('mounted');
+    //     this.updateColors('primary', this.primaryColors[10]);
+    // }
 };
+
 </script>

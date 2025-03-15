@@ -1,4 +1,4 @@
-import "primeicons/primeicons.css";
+import "./extern/primeicons/primeicons.css";
 import "./style.css";
 import "./flags.css";
 
@@ -14,6 +14,7 @@ import AppState from './plugins/appState.js';
 import Noir from './presets/Noir.js';
 
 import ThemeSwitcher from './components/ThemeSwitcher.vue';
+import CameraSetting from './components/CameraSetting.vue';
 import CameraBaseSettings from './components/CameraBaseSettings.vue';
 import CameraAdvancedSettings from './components/CameraAdvancedSettings.vue';
 import HeaderMenuBar from './components/HeaderMenuBar.vue';
@@ -37,9 +38,9 @@ app.use(ToastService);
 app.use(DialogService);
 
 app.component('ThemeSwitcher', ThemeSwitcher);
+app.component('CameraSetting', CameraSetting);
 app.component('CameraBaseSettings', CameraBaseSettings);
 app.component('CameraAdvancedSettings', CameraAdvancedSettings);
 app.component('HeaderMenuBar', HeaderMenuBar);
-
 
 app.mount("#app");

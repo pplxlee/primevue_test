@@ -2,7 +2,7 @@
     <div class="header">
         <Menubar :model="items" breakpoint="500px" class="header-menubar">
             <template #start>
-                <div class="flex m-4 mr-12 text-4xl font-bold items-center">
+                <div class="header-title flex m-4 mr-12 text-4xl font-bold items-center">
                     {{ title }}
                 </div>
             </template>
@@ -27,7 +27,7 @@
 
 <script setup>
 import { ref } from "vue";
-const theme_switcher = ref(false);
+const theme_switcher = ref(true);
 const title = ref('PY505');
 const items = ref([
     {
