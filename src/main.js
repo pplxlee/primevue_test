@@ -3,6 +3,7 @@ import "./style.css";
 import "./flags.css";
 
 import { createApp } from "vue";
+import router from './router'
 import PrimeVue from "primevue/config";
 import ConfirmationService from 'primevue/confirmationservice'
 import DialogService from 'primevue/dialogservice'
@@ -10,9 +11,12 @@ import ToastService from 'primevue/toastservice';
 
 import App from "./App.vue";
 import AppState from './plugins/appState.js';
-import ThemeSwitcher from './components/ThemeSwitcher.vue';
 import Noir from './presets/Noir.js';
 
+import ThemeSwitcher from './components/ThemeSwitcher.vue';
+import CameraBaseSettings from './components/CameraBaseSettings.vue';
+import CameraAdvancedSettings from './components/CameraAdvancedSettings.vue';
+import HeaderMenuBar from './components/HeaderMenuBar.vue';
 
 const app = createApp(App);
 
@@ -26,12 +30,16 @@ app.use(PrimeVue, {
         }
     }
 });
+app.use(router)
 app.use(AppState);
 app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
 
 app.component('ThemeSwitcher', ThemeSwitcher);
+app.component('CameraBaseSettings', CameraBaseSettings);
+app.component('CameraAdvancedSettings', CameraAdvancedSettings);
+app.component('HeaderMenuBar', HeaderMenuBar);
 
 
 app.mount("#app");

@@ -6,7 +6,7 @@
     --body-bg: var(--p-surface-50);
     --body-text-color: var(--p-surface-900);
     --card-border: 1px solid var(--border-color);
-    --card-bg: var(--p-surface-0);
+    --card-bg: var(--p-primary-50);
     --border-color: var(--p-surface-200);
     --text-color: var(--p-surface-700);
     --overlay-background: #ffffff;
@@ -15,11 +15,12 @@
 :root[class='p-dark'] {
     --body-bg: var(--p-surface-950);
     --body-text-color: var(--p-surface-50);
-    --card-border: 1px solid transparent;
+    --card-border: 1px solid var(--border-color);
     --card-bg: var(--p-surface-900);
-    --border-color: rgba(255, 255, 255, 0.1);
+    --border-color: var(--p-surface-700);
     --text-color: var(--p-surface-0);
     --overlay-background: var(--p-surface-900);
+    --header-menubar-background: var(--p-surface-900);
 }
 
 html {
@@ -35,12 +36,47 @@ body {
     font-weight: normal;
     color: var(--body-text-color);
     padding: 1rem;
+
+    /* 根据屏幕宽度 padding 若屏幕宽度大于 80rem，则左右 padding 为 20rem */
+    @media (min-width: 80rem) {
+        padding-left: 20rem;
+        padding-right: 20rem;
+    }
 }
 
 .card {
-    background: var(--card-bg);
     border: var(--card-border);
     padding: 2rem;
     border-radius: 10px;
     margin-bottom: 1rem;
+    background-color: var(--card-bg);
+}
+
+.header {
+    margin-bottom: 1rem;
+    border-radius: 0px;
+}
+
+.header-menubar {
+    background-color: var(--card-bg) !important;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    height: var(--vp-nav-height);
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--vp-c-text-1);
+    transition: opacity .25s
+}
+
+.setting-item {
+    line-height: 2.5em;
+}
+
+.setting-item-right-select {
+    line-height: 1.5em;
+    width: 300%;
 }
