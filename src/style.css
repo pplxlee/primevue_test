@@ -72,3 +72,7 @@ body {
 .setting-item-right-select {
     line-height: 1.5em;
 }
+
+.hidden-theme-switcher {
+    visibility: hidden;
+}

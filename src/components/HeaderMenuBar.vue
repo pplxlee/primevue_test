@@ -19,7 +19,7 @@
                 </a></div>
             </template>
             <template #end>
-                <ThemeSwitcher v-if="theme_switcher" />
+                <ThemeSwitcher class="hidden-theme-switcher"/>
             </template>
         </Menubar>
     </div>
@@ -27,7 +27,6 @@
 
 <script setup>
 import { ref } from "vue";
-const theme_switcher = ref(true);
 const title = ref('PY505');
 const items = ref([
     {

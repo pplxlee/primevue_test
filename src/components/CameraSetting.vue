@@ -6,7 +6,8 @@
         <div class="setting-item-right flex items-center w-8/12 min-w-48">
             <div v-if="setting.type === 'select'" class="w-full">
                 <Select v-model="setting.current_value" :options="setting.selections" optionLabel="description"
-                    optionValue="value" @update:modelValue="onSettingChange(setting.name, $event)"
+                    optionValue="value" @update:modelValue="onSettingChange(setting.name, $event)" 
+                    :disabled="!setting_writable || !(setting.writable?? true)"
                     class="setting-item-right-select w-full">
                 </Select>
             </div>
@@ -22,6 +23,7 @@
 <script setup>
 const props = defineProps({
     setting: Object,
+    setting_writable: Boolean,
     onSettingChange: Function
 })
 </script>

@@ -1,6 +1,9 @@
 import { reactive, ref } from 'vue'
 
 export const camera_settings = reactive({
+    error_flag: false,
+    error_message: '',
+    settings_writable: true,
     settings: [
         {
             type: 'select',
@@ -9,6 +12,7 @@ export const camera_settings = reactive({
             description: "设置1",
             current_description: "设置1_数值_1",
             current_value: 'setting_1_value_1',
+            writable: true,
             selections: [
                 {
                     description: "设置1_数值_1",
@@ -27,6 +31,7 @@ export const camera_settings = reactive({
             description: "设置2",
             current_value: 'setting_2_value_2',
             current_description: "设置2_数值_1",
+            writable: true,
             selections: [
                 {
                     description: "设置2_数值_1",
@@ -61,6 +66,7 @@ export const camera_settings = reactive({
             description: "设置5",
             current_value: 'setting_5_value_1',
             current_description: "设置5_数值_1",
+            writable: true,
             selections: [
                 {
                     description: "设置5_数值_1",
@@ -73,10 +79,10 @@ export const camera_settings = reactive({
             ]
         }
     ]
-})
+});
 
-const camera_settings_api_url = 'http://127.0.0.1:5000/api/v1/camera_settings'
 const camera_settings_api_url_get = 'http://127.0.0.1:5000/api/v1/camera_settings/get'
+const camera_settings_api_url_random = 'http://127.0.0.1:5000/api/v1/camera_settings/random'
 const camera_settings_api_url_set = 'http://127.0.0.1:5000/api/v1/camera_settings/set'
 
 const setCameraSettings = async (settings) => {
@@ -108,17 +114,20 @@ const interval_id = ref()
 
 export const cameraSettingGetterSetupFunc = () => {
     interval_id.value = setInterval(() => {
-        try {
-            fetch(camera_settings_api_url_get)
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data)
-                    camera_settings.settings = data
-                })
-        }
-        catch (error) {
+        fetch(camera_settings_api_url_get).catch(error => {
             console.error(error)
-        }
+            camera_settings.error_flag = true
+            camera_settings.error_message = "程序内部错误，请尝试重启设备！"
+            camera_settings.settings_writable = false
+        }).then(response => {
+            return response.json()
+        }).then(data => {
+            camera_settings.error_flag = data.error_flag ?? false
+            camera_settings.error_message = data.error_message ?? ""
+            camera_settings.settings_writable = data.settings_writable ?? true
+            camera_settings.settings = data.settings
+            console.log(data)
+        })
     }, 1000)
 }
 
