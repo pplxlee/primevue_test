@@ -81,9 +81,9 @@ export const camera_settings = reactive({
     ]
 });
 
-const camera_settings_api_url_get = 'http://127.0.0.1:5000/api/v1/camera_settings/get'
-const camera_settings_api_url_random = 'http://127.0.0.1:5000/api/v1/camera_settings/random'
-const camera_settings_api_url_set = 'http://127.0.0.1:5000/api/v1/camera_settings/set'
+const camera_settings_api_url_get = 'http://10.42.10.1:3300/api/v1/camera_settings/get'
+const camera_settings_api_url_random = 'http://10.42.10.1:3300/api/v1/camera_settings/random'
+const camera_settings_api_url_set = 'http://10.42.10.1:3300/api/v1/camera_settings/set'
 
 const setCameraSettings = async (settings) => {
     try {
@@ -125,7 +125,7 @@ export const cameraSettingGetterSetupFunc = () => {
             camera_settings.error_flag = data.error_flag ?? false
             camera_settings.error_message = data.error_message ?? ""
             camera_settings.settings_writable = data.settings_writable ?? true
-            camera_settings.settings = data.settings
+            camera_settings.settings = data.settings ?? []
             console.log(data)
         })
     }, 1000)
