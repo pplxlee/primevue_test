@@ -81,11 +81,12 @@ export const camera_settings = reactive({
     ]
 });
 
-const camera_settings_api_url_get = 'http://10.42.10.1:3300/api/v1/camera_settings/get'
-const camera_settings_api_url_random = 'http://10.42.10.1:3300/api/v1/camera_settings/random'
-const camera_settings_api_url_set = 'http://10.42.10.1:3300/api/v1/camera_settings/set'
+const camera_settings_api_url_get = 'http://py505.local/api/v1/camera_settings/get'
+const camera_settings_api_url_random = 'http://py505.local/api/v1/camera_settings/random'
+const camera_settings_api_url_set = 'http://py505.local/api/v1/camera_settings/set'
 
 const setCameraSettings = async (settings) => {
+    camera_settings.settings_writable = false
     try {
         const response = await fetch(camera_settings_api_url_set, {
             method: 'POST',
@@ -94,8 +95,7 @@ const setCameraSettings = async (settings) => {
             },
             body: JSON.stringify(settings)
         })
-        const data = await response.json()
-        console.log(data)
+        console.log(response.text())
     } catch (error) {
         console.error(error)
     }
@@ -120,8 +120,20 @@ export const cameraSettingGetterSetupFunc = () => {
             camera_settings.error_message = "程序内部错误，请尝试重启设备！"
             camera_settings.settings_writable = false
         }).then(response => {
-            return response.json()
+            try {
+                return response.json()
+            }
+            catch (error) {
+                return
+            }
         }).then(data => {
+            if (data === null)
+            {
+                camera_settings.error_flag = true
+                camera_settings.error_message = "程序内部错误，请尝试重启设备！"
+                camera_settings.settings_writable = false
+                return
+            }
             camera_settings.error_flag = data.error_flag ?? false
             camera_settings.error_message = data.error_message ?? ""
             camera_settings.settings_writable = data.settings_writable ?? true
