@@ -117,7 +117,7 @@ export const cameraSettingGetterSetupFunc = () => {
         fetch(camera_settings_api_url_get).catch(error => {
             console.error(error)
             camera_settings.error_flag = true
-            camera_settings.error_message = "程序内部错误，请尝试重启设备！"
+            camera_settings.error_message = "请检查网络连接或尝试重启设备！"
             camera_settings.settings_writable = false
         }).then(response => {
             try {
@@ -130,7 +130,7 @@ export const cameraSettingGetterSetupFunc = () => {
             if (data === null)
             {
                 camera_settings.error_flag = true
-                camera_settings.error_message = "程序内部错误，请尝试重启设备！"
+                camera_settings.error_message = "请检查网络连接或尝试重启设备！"
                 camera_settings.settings_writable = false
                 return
             }
