@@ -18,6 +18,7 @@ import CameraSetting from './components/CameraSetting.vue';
 import CameraBaseSettings from './components/CameraBaseSettings.vue';
 import CameraAdvancedSettings from './components/CameraAdvancedSettings.vue';
 import HeaderMenuBar from './components/HeaderMenuBar.vue';
+import WifiConnection from './components/WifiConnection.vue';
 
 const app = createApp(App);
 
@@ -42,5 +43,6 @@ app.component('CameraSetting', CameraSetting);
 app.component('CameraBaseSettings', CameraBaseSettings);
 app.component('CameraAdvancedSettings', CameraAdvancedSettings);
 app.component('HeaderMenuBar', HeaderMenuBar);
+app.component('WifiConnection', WifiConnection);
 
 app.mount("#app");

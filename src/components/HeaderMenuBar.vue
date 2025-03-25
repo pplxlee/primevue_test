@@ -1,6 +1,6 @@
 <template>
     <div class="header">
-        <Menubar :model="items" breakpoint="500px" class="header-menubar">
+        <Menubar :model="items" breakpoint="40rem" class="header-menubar">
             <template #start>
                 <div class="header-title flex m-4 mr-12 text-4xl font-bold items-center">
                     {{ title }}
@@ -36,6 +36,10 @@ const items = ref([
     {
         label: '高级设置',
         route: '/CameraAdvancedSettings',
+    },
+    {
+        label: '连接WIFI',
+        route: '/WifiConnection',
     }
 ]);
 </script>

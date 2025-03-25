@@ -35,12 +35,12 @@ body {
     background-color: var(--body-bg);
     font-weight: normal;
     color: var(--body-text-color);
-    padding: 1rem;
+    padding: 1rem !important;
 
     /* 根据屏幕宽度 padding 若屏幕宽度大于 80rem，则左右 padding 为 20rem */
     @media (min-width: 80rem) {
-        padding-left: 20rem;
-        padding-right: 20rem;
+        padding-left: 20rem !important;
+        padding-right: 20rem !important;
     }
 }
 
