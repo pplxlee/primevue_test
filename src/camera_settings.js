@@ -110,6 +110,26 @@ export const onCameraSettingChange = async (name, value) => {
     })
 }
 
+export const sendCameraCommand = async (name, value) => {
+    try {
+        const response = await fetch(camera_settings_api_url_set, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                commands: [{
+                    name: name,
+                    value: value
+                }]
+            })
+        })
+        console.log(response.text())
+    } catch (error) {
+        console.error(error)
+    }
+}
+
 const interval_id = ref()
 
 export const cameraSettingGetterSetupFunc = () => {
@@ -127,8 +147,7 @@ export const cameraSettingGetterSetupFunc = () => {
                 return
             }
         }).then(data => {
-            if (data === null)
-            {
+            if (data === null) {
                 camera_settings.error_flag = true
                 camera_settings.error_message = "请检查网络连接或尝试重启设备！"
                 camera_settings.settings_writable = false

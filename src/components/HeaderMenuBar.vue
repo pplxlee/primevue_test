@@ -37,9 +37,9 @@ const items = ref([
         label: '高级设置',
         route: '/CameraAdvancedSettings',
     },
-    {
-        label: '连接WIFI',
-        route: '/WifiConnection',
-    }
+    // {
+    //     label: '连接WIFI',
+    //     route: '/WifiConnection',
+    // }
 ]);
 </script>
