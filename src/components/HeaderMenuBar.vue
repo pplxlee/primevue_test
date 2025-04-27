@@ -27,7 +27,7 @@
 
 <script setup>
 import { ref } from "vue";
-const title = ref('PY505');
+const title = ref('PR1');
 const items = ref([
     {
         label: '基础设置',

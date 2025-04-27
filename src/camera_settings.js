@@ -81,9 +81,9 @@ export const camera_settings = reactive({
     ]
 });
 
-const camera_settings_api_url_get = 'http://py505.local/api/v1/camera_settings/get'
-const camera_settings_api_url_random = 'http://py505.local/api/v1/camera_settings/random'
-const camera_settings_api_url_set = 'http://py505.local/api/v1/camera_settings/set'
+const camera_settings_api_url_get = 'http://pr1.local/api/v1/camera_settings/get'
+const camera_settings_api_url_random = 'http://pr1.local/api/v1/camera_settings/random'
+const camera_settings_api_url_set = 'http://pr1.local/api/v1/camera_settings/set'
 
 const setCameraSettings = async (settings) => {
     camera_settings.settings_writable = false
