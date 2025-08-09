@@ -1,0 +1,51 @@
+{
+  "language": {
+    "select_placeholder": "选择语言",
+    "english": "English",
+    "chinese": "中文"
+  },
+  "theme": {
+    "light": "浅色",
+    "dark": "深色",
+    "primary_colors": "主要颜色",
+    "surface_colors": "表面颜色",
+    "preset": "预设",
+    "ripple_effect": "波纹效果"
+  },
+  "wifi": {
+    "title": "Wi-Fi连接",
+    "network_name": "网络名称",
+    "password": "密码",
+    "connect": "连接",
+    "disconnect": "断开",
+    "cancel": "取消",
+    "confirm": "确定",
+    "connecting": "连接中...",
+    "connected": "已连接",
+    "not_connected": "未连接",
+    "signal_strength": "信号强度"
+  },
+  "camera": {
+    "title": "相机设置",
+    "base_settings": "基本设置",
+    "advanced_settings": "高级设置",
+    "resolution": "分辨率",
+    "fps": "帧率",
+    "brightness": "亮度",
+    "contrast": "对比度",
+    "saturation": "饱和度",
+    "sharpness": "锐度",
+    "white_balance": "白平衡",
+    "exposure": "曝光",
+    "iso": "ISO",
+    "zoom": "缩放",
+    "reboot": "重启相机",
+    "reboot_camera": "重启相机",
+    "confirm_reboot": "是否重启相机"
+  },
+  "menu": {
+    "home": "首页",
+    "camera": "相机",
+    "wifi": "Wi-Fi"
+  }
+}

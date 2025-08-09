@@ -1,7 +1,7 @@
 <template>
     <div class="card space-y-8">
         <div class="setting-header text-2xl font-bold">
-            基础设置
+            {{ $t('camera.base_settings') }}
         </div>
         <!-- 错误信息 -->
         <Message severity="error" v-if="camera_settings.error_flag" class="setting-error">
@@ -17,8 +17,11 @@
 
 <script setup>
 import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { camera_settings, onCameraSettingChange, cameraSettingGetterSetupFunc, cameraSettingGetterCleanupFunc } from '../camera_settings'
 import CameraSetting from './CameraSetting.vue'
+
+const { t } = useI18n();
 
 const camera_base_settings = computed(() => {
     return camera_settings.settings.filter(setting => !setting.is_advanced)

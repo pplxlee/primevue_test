@@ -30,22 +30,25 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { useI18n } from 'vue-i18n';
 import LanguageSwitcher from './LanguageSwitcher.vue';
 import ThemeSwitcher from './ThemeSwitcher.vue';
 
+const { t } = useI18n();
+
 const title = ref('PR1');
-const items = ref([
+const items = computed(() => [
     {
-        label: '基础设置',
+        label: t('menu.home'),
         route: '/',
     },
     {
-        label: '高级设置',
+        label: t('menu.camera'),
         route: '/CameraAdvancedSettings',
     },
     // {
-    //     label: '连接WIFI',
+    //     label: t('menu.wifi'),
     //     route: '/WifiConnection',
     // }
 ]);

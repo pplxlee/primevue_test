@@ -1,0 +1,51 @@
+{
+  "language": {
+    "select_placeholder": "Select a Language",
+    "english": "English",
+    "chinese": "中文"
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "primary_colors": "Primary Colors",
+    "surface_colors": "Surface Colors",
+    "preset": "Preset",
+    "ripple_effect": "Ripple Effect"
+  },
+  "wifi": {
+    "title": "Wi-Fi Connection",
+    "network_name": "Network Name",
+    "password": "Password",
+    "connect": "Connect",
+    "disconnect": "Disconnect",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "connecting": "Connecting...",
+    "connected": "Connected",
+    "not_connected": "Not Connected",
+    "signal_strength": "Signal Strength"
+  },
+  "camera": {
+    "title": "Camera Settings",
+    "base_settings": "Base Settings",
+    "advanced_settings": "Advanced Settings",
+    "resolution": "Resolution",
+    "fps": "FPS",
+    "brightness": "Brightness",
+    "contrast": "Contrast",
+    "saturation": "Saturation",
+    "sharpness": "Sharpness",
+    "white_balance": "White Balance",
+    "exposure": "Exposure",
+    "iso": "ISO",
+    "zoom": "Zoom",
+    "reboot": "Reboot Camera",
+    "reboot_camera": "Reboot Camera",
+    "confirm_reboot": "Confirm reboot camera?"
+  },
+  "menu": {
+    "home": "Home",
+    "camera": "Camera",
+    "wifi": "Wi-Fi"
+  }
+}

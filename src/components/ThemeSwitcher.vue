@@ -22,7 +22,7 @@
             <div
                 class="absolute top-[2.5rem] right-0 hidden w-[16rem] p-3 bg-white dark:bg-surface-800 rounded-md shadow border border-surface-200 dark:border-surface-700 flex-col justify-start items-start gap-3.5 inline-flex origin-top z-10">
                 <div class="flex-col justify-start items-start gap-2 inline-flex pr-4">
-                    <span class="text-sm font-medium">Primary Colors</span>
+                    <span class="text-sm font-medium">{{ $t('theme.primary_colors') || 'Primary Colors' }}</span>
                     <div class="self-stretch justify-start items-start gap-2 inline-flex flex-wrap">
                         <button v-for="primaryColor of primaryColors" :key="primaryColor.name" type="button"
                             :title="primaryColor.name" @click="updateColors('primary', primaryColor)"
@@ -34,7 +34,7 @@
                     </div>
                 </div>
                 <div class="flex-col justify-start items-start gap-2 inline-flex pr-2">
-                    <span class="text-sm font-medium">Surface Colors</span>
+                    <span class="text-sm font-medium">{{ $t('theme.surface_colors') || 'Surface Colors' }}</span>
                     <div class="self-stretch justify-start items-start gap-2 inline-flex">
                         <button v-for="surface of surfaces" :key="surface.name" type="button" :title="surface.name"
                             @click="updateColors('surface', surface)"
@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="flex-col justify-start items-start gap-2 inline-flex w-full">
-                    <span class="text-sm font-medium">Preset</span>
+                    <span class="text-sm font-medium">{{ $t('theme.preset') || 'Preset' }}</span>
                     <div
                         class="inline-flex p-[0.28rem] items-start gap-[0.28rem] rounded-[0.71rem] border border-[#00000003] w-full">
                         <SelectButton v-model="$appState.theme" @update:modelValue="onPresetChange" :options="presets"
@@ -54,7 +54,7 @@
                     </div>
                 </div>
                 <div class="inline-flex flex-col justify-start items-start gap-2 w-full pt-4 pb-2">
-                    <span class="text-sm font-medium m-0">Ripple Effect</span>
+                    <span class="text-sm font-medium m-0">{{ $t('theme.ripple_effect') || 'Ripple Effect' }}</span>
                     <ToggleSwitch :modelValue="rippleActive" @update:modelValue="onRippleChange" />
                 </div>
             </div>
@@ -67,7 +67,7 @@ import { $t, updatePreset, updateSurfacePalette } from '@primeuix/themes';
 import Aura from '@primeuix/themes/aura';
 import Lara from '@primeuix/themes/lara';
 import Nora from '@primeuix/themes/nora';
-// import { data } from 'autoprefixer';
+import { useI18n } from 'vue-i18n';
 
 const presets = {
     Aura,
@@ -314,8 +314,8 @@ export default {
                         100: '#fce7f3',
                         200: '#fbcfe8',
                         300: '#f9a8d4',
-                        400: '#f472b6',
-                        500: '#ec4899',
+                        400: '#fb7185',
+                        500: '#f43f5e',
                         600: '#db2777',
                         700: '#be185d',
                         800: '#9d174d',
@@ -366,7 +366,7 @@ export default {
                         100: '#f3f4f6',
                         200: '#e5e7eb',
                         300: '#d1d5db',
-                        400: '#9ca3af',
+                        400: '#9ca3ae',
                         500: '#6b7280',
                         600: '#4b5563',
                         700: '#374151',
@@ -427,196 +427,838 @@ export default {
                     },
                 },
                 {
-                    name: 'soho',
+                    name: 'dark',
                     palette: {
                         0: '#ffffff',
-                        50: '#f4f4f4',
-                        100: '#e8e9e9',
-                        200: '#d2d2d4',
-                        300: '#bbbcbe',
-                        400: '#a5a5a9',
-                        500: '#8e8f93',
-                        600: '#77787d',
-                        700: '#616268',
-                        800: '#4a4b52',
-                        900: '#34343d',
-                        950: '#1d1e27',
-                    },
-                },
-                {
-                    name: 'viva',
-                    palette: {
-                        0: '#ffffff',
-                        50: '#f3f3f3',
-                        100: '#e7e7e8',
-                        200: '#cfd0d0',
-                        300: '#b7b8b9',
-                        400: '#9fa1a1',
-                        500: '#87898a',
-                        600: '#6e7173',
-                        700: '#565a5b',
-                        800: '#3e4244',
-                        900: '#262b2c',
-                        950: '#0e1315',
-                    },
-                },
-                {
-                    name: 'ocean',
-                    palette: {
-                        0: '#ffffff',
-                        50: '#fbfcfc',
-                        100: '#F7F9F8',
-                        200: '#EFF3F2',
-                        300: '#DADEDD',
-                        400: '#B1B7B6',
-                        500: '#828787',
-                        600: '#5F7274',
-                        700: '#415B61',
-                        800: '#29444E',
-                        900: '#183240',
-                        950: '#0c1920',
+                        50: '#fafafa',
+                        100: '#f5f5f5',
+                        200: '#e5e5e5',
+                        300: '#d4d4d4',
+                        400: '#a3a3a3',
+                        500: '#737373',
+                        600: '#525252',
+                        700: '#404040',
+                        800: '#262626',
+                        900: '#171717',
+                        950: '#0a0a0a',
                     },
                 },
             ],
-        };
+        }
     },
     methods: {
         onThemeToggler() {
-            const root = document.getElementsByTagName('html')[0];
+            this.$appState.darkTheme = !this.$appState.darkTheme;
+            this.iconClass = this.$appState.darkTheme ? 'pi-sun' : 'pi-moon';
 
-            root.classList.toggle('p-dark');
-            this.iconClass = this.iconClass === 'pi-moon' ? 'pi-sun' : 'pi-moon';
+            const theme = this.$appState.darkTheme ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', theme);
+            document.documentElement.setAttribute('class', theme);
         },
         getPresetExt() {
-            const color = this.primaryColors.find(
-                (c) => c.name === this.selectedPrimaryColor
-            );
-
-            if (color.name === 'noir') {
-                return {
-                    semantic: {
-                        primary: {
-                            50: '{surface.50}',
-                            100: '{surface.100}',
-                            200: '{surface.200}',
-                            300: '{surface.300}',
-                            400: '{surface.400}',
-                            500: '{surface.500}',
-                            600: '{surface.600}',
-                            700: '{surface.700}',
-                            800: '{surface.800}',
-                            900: '{surface.900}',
-                            950: '{surface.950}',
-                        },
-                        colorScheme: {
-                            light: {
-                                primary: {
-                                    color: '{primary.950}',
-                                    contrastColor: '#ffffff',
-                                    hoverColor: '{primary.900}',
-                                    activeColor: '{primary.800}',
-                                },
-                                highlight: {
-                                    background: '{primary.950}',
-                                    focusBackground: '{primary.700}',
-                                    color: '#ffffff',
-                                    focusColor: '#ffffff',
-                                },
+            const isDark = this.$appState.darkTheme;
+            return {
+                semantic: {
+                    colorScheme: {
+                        light: {
+                            primary: {
+                                50: '{emerald.50}',
+                                100: '{emerald.100}',
+                                200: '{emerald.200}',
+                                300: '{emerald.300}',
+                                400: '{emerald.400}',
+                                500: '{emerald.500}',
+                                600: '{emerald.600}',
+                                700: '{emerald.700}',
+                                800: '{emerald.800}',
+                                900: '{emerald.900}',
+                                950: '{emerald.950}',
                             },
-                            dark: {
-                                primary: {
-                                    color: '{primary.50}',
-                                    contrastColor: '{primary.950}',
-                                    hoverColor: '{primary.100}',
-                                    activeColor: '{primary.200}',
-                                },
-                                highlight: {
-                                    background: '{primary.50}',
-                                    focusBackground: '{primary.300}',
-                                    color: '{primary.950}',
-                                    focusColor: '{primary.950}',
-                                },
+                        },
+                        dark: {
+                            primary: {
+                                50: '{emerald.50}',
+                                100: '{emerald.100}',
+                                200: '{emerald.200}',
+                                300: '{emerald.300}',
+                                400: '{emerald.400}',
+                                500: '{emerald.500}',
+                                600: '{emerald.600}',
+                                700: '{emerald.700}',
+                                800: '{emerald.800}',
+                                900: '{emerald.900}',
+                                950: '{emerald.950}',
                             },
                         },
                     },
-                };
-            } else {
-                if (this.$appState.theme === 'Nora') {
-                    return {
-                        semantic: {
-                            primary: color.palette,
-                            colorScheme: {
-                                light: {
-                                    primary: {
-                                        color: '{primary.600}',
-                                        contrastColor: '#ffffff',
-                                        hoverColor: '{primary.700}',
-                                        activeColor: '{primary.800}',
-                                    },
-                                    highlight: {
-                                        background: '{primary.600}',
-                                        focusBackground: '{primary.700}',
-                                        color: '#ffffff',
-                                        focusColor: '#ffffff',
-                                    },
-                                },
-                                dark: {
-                                    primary: {
-                                        color: '{primary.500}',
-                                        contrastColor: '{surface.900}',
-                                        hoverColor: '{primary.400}',
-                                        activeColor: '{primary.300}',
-                                    },
-                                    highlight: {
-                                        background: '{primary.500}',
-                                        focusBackground: '{primary.400}',
-                                        color: '{surface.900}',
-                                        focusColor: '{surface.900}',
-                                    },
-                                },
+                    primary: {
+                        50: '{emerald.50}',
+                        100: '{emerald.100}',
+                        200: '{emerald.200}',
+                        300: '{emerald.300}',
+                        400: '{emerald.400}',
+                        500: '{emerald.500}',
+                        600: '{emerald.600}',
+                        700: '{emerald.700}',
+                        800: '{emerald.800}',
+                        900: '{emerald.900}',
+                        950: '{emerald.950}',
+                    },
+                    color: {
+                        primary: {
+                            50: '{emerald.50}',
+                            100: '{emerald.100}',
+                            200: '{emerald.200}',
+                            300: '{emerald.300}',
+                            400: '{emerald.400}',
+                            500: '{emerald.500}',
+                            600: '{emerald.600}',
+                            700: '{emerald.700}',
+                            800: '{emerald.800}',
+                            900: '{emerald.900}',
+                            950: '{emerald.950}',
+                        },
+                        green: {
+                            50: '{green.50}',
+                            100: '{green.100}',
+                            200: '{green.200}',
+                            300: '{green.300}',
+                            400: '{green.400}',
+                            500: '{green.500}',
+                            600: '{green.600}',
+                            700: '{green.700}',
+                            800: '{green.800}',
+                            900: '{green.900}',
+                            950: '{green.950}',
+                        },
+                    },
+                    focusRing: {
+                        width: '0px',
+                        style: 'solid',
+                        color: 'transparent',
+                    },
+                    disabledOpacity: '{opacity.60}',
+                    mask: {
+                        background: 'rgba(0, 0, 0, 0.4)',
+                    },
+                    formField: {
+                        transitionDuration: '{transition.duration}',
+                    },
+                    button: {
+                        focusRing: {
+                            width: '0px',
+                            style: 'solid',
+                            color: 'transparent',
+                        },
+                    },
+                    list: {
+                        option: {
+                            focusRing: {
+                                width: '0px',
+                                style: 'solid',
+                                color: 'transparent',
                             },
                         },
-                    };
-                } else {
-                    return {
-                        semantic: {
-                            primary: color.palette,
-                            colorScheme: {
-                                light: {
-                                    primary: {
-                                        color: '{primary.500}',
-                                        contrastColor: '#ffffff',
-                                        hoverColor: '{primary.600}',
-                                        activeColor: '{primary.700}',
-                                    },
-                                    highlight: {
-                                        background: '{primary.50}',
-                                        focusBackground: '{primary.100}',
-                                        color: '{primary.700}',
-                                        focusColor: '{primary.800}',
-                                    },
-                                },
-                                dark: {
-                                    primary: {
-                                        color: '{primary.400}',
-                                        contrastColor: '{surface.900}',
-                                        hoverColor: '{primary.300}',
-                                        activeColor: '{primary.200}',
-                                    },
-                                    highlight: {
-                                        background:
-                                            'color-mix(in srgb, {primary.400}, transparent 84%)',
-                                        focusBackground:
-                                            'color-mix(in srgb, {primary.400}, transparent 76%)',
-                                        color: 'rgba(255,255,255,.87)',
-                                        focusColor: 'rgba(255,255,255,.87)',
-                                    },
-                                },
+                    },
+                    table: {
+                        hoverBackgroundColor: isDark
+                            ? 'rgba(255, 255, 255, 0.03)'
+                            : 'rgba(0, 0, 0, 0.03)',
+                    },
+                    dataView: {
+                        hoverBackgroundColor: isDark
+                            ? 'rgba(255, 255, 255, 0.03)'
+                            : 'rgba(0, 0, 0, 0.03)',
+                    },
+                    paginator: {
+                        backgroundColor: 'transparent',
+                    },
+                    navigation: {
+                        focusRing: {
+                            width: '0px',
+                            style: 'solid',
+                            color: 'transparent',
+                        },
+                    },
+                    accordion: {
+                        hoverBackgroundColor: isDark
+                            ? 'rgba(255, 255, 255, 0.03)'
+                            : 'rgba(0, 0, 0, 0.03)',
+                    },
+                    tab: {
+                        hoverBackgroundColor: isDark
+                            ? 'rgba(255, 255, 255, 0.03)'
+                            : 'rgba(0, 0, 0, 0.03)',
+                    },
+                    dialog: {
+                        shadow:
+                            '0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12)',
+                    },
+                    navigation: {
+                        list: {
+                            focusRing: {
+                                width: '0px',
+                                style: 'solid',
+                                color: 'transparent',
                             },
                         },
+                        item: {
+                            focusRing: {
+                                width: '0px',
+                                style: 'solid',
+                                color: 'transparent',
+                            },
+                        },
+                    },
+                    tree: {
+                        item: {
+                            focusRing: {
+                                width: '0px',
+                                style: 'solid',
+                                color: 'transparent',
+                            },
+                        },
+                    },
+                    datepicker: {
+                        cell: {
+                            focusRing: {
+                                width: '0px',
+                                style: 'solid',
+                                color: 'transparent',
+                            },
+                        },
+                    },
+                    menu: {
+                        item: {
+                            focusRing: {
+                                width: '0px',
+                                style: 'solid',
+                                color: 'transparent',
+                            },
+                        },
+                    },
+                    menubar: {
+                        item: {
+                            focusRing: {
+                                width: '0px',
+                                style: 'solid',
+                                color: 'transparent',
+                            },
+                        },
+                    },
+                    select: {
+                        option: {
+                            focusRing: {
+                                width: '0px',
+                                style: 'solid',
+                                color: 'transparent',
+                            },
+                        },
+                    },
+                    multiselect: {
+                        option: {
+                            focusRing: {
+                                width: '0px',
+                                style: 'solid',
+                                color: 'transparent',
+                            },
+                        },
+                    },
+                    highlight: {
+                        borderRadius: '6px',
+                        background: '{primary.color}',
+                        color: '{primary.contrast.color}',
+                        focusBackground: '{primary.color}',
+                        focusColor: '{primary.contrast.color}',
+                    },
+                    inset: {
+                        borderRadius: '6px',
+                    },
+                    focus: {
+                        borderWidth: '{focus.ring.width}',
+                        borderStyle: '{focus.ring.style}',
+                        borderColor: '{focus.ring.color}',
+                        shadow: '{focus.ring.shadow}',
+                        shadowColor: 'transparent',
+                    },
+                    error: {
+                        shadow: '{red.200}',
+                        shadowColor: 'transparent',
+                    },
+                    transition: {
+                        duration: '0.2s',
+                        easing: 'ease-in-out',
+                        opacity: '{opacity.80}',
+                        scale: '1.05',
+                    },
+                },
+                css: ({ dt }) => {
+                    return {
+                        '.p-button.p-button-outlined:enabled:hover': {
+                            color: dt('button.outlined.hover.color') || dt('primary.400'),
+                            borderColor: dt('button.outlined.hover.color') || dt('primary.400'),
+                        },
+                        '.p-button.p-button-outlined:enabled:active': {
+                            color: dt('button.outlined.active.color') || dt('primary.400'),
+                            borderColor: dt('button.outlined.active.color') || dt('primary.400'),
+                        },
+                        '.p-button.p-button-outlined .p-button-icon': {
+                            color: dt('button.outlined.icon.color') || dt('primary.color'),
+                        },
+                        '.p-button.p-button-outlined:enabled:hover .p-button-icon': {
+                            color: dt('button.outlined.icon.hover.color') || dt('primary.color'),
+                        },
+                        '.p-button.p-button-outlined:enabled:active .p-button-icon': {
+                            color: dt('button.outlined.icon.active.color') || dt('primary.color'),
+                        },
+                        '.p-datepicker-buttonbar .p-button': {
+                            padding: '0.25rem 0.5rem',
+                            fontWeight: '400',
+                            border: '0 none',
+                            borderRadius: '4px',
+                        },
+                        '.p-datepicker-buttonbar .p-button .p-button-label': {
+                            fontWeight: '400',
+                        },
+                        '.p-datepicker-buttonbar .p-button:enabled:hover': {
+                            background: dt('button.hover.background'),
+                            color: dt('button.hover.color'),
+                            borderColor: dt('button.hover.border.color'),
+                        },
+                        '.p-datepicker-buttonbar .p-button:enabled:active': {
+                            background: dt('button.active.background'),
+                            color: dt('button.active.color'),
+                            borderColor: dt('button.active.border.color'),
+                        },
+                        '.p-password-panel .p-password-meter .p-password-strength.weak': {
+                            background: dt('red.500'),
+                        },
+                        '.p-password-panel .p-password-meter .p-password-strength.medium': {
+                            background: dt('orange.500'),
+                        },
+                        '.p-password-panel .p-password-meter .p-password-strength.strong': {
+                            background: dt('green.500'),
+                        },
+                        '.p-ripple-disabled .p-ink': {
+                            backgroundColor: 'transparent',
+                        },
+                        '.p-menuitem-link': {
+                            borderRadius: '4px',
+                        },
+                        '.p-menuitem-link:not(.p-disabled):hover': {
+                            background: dt('menu.item.hover.background'),
+                        },
+                        '.p-menuitem-link:not(.p-disabled):hover .p-menuitem-text': {
+                            color: dt('menu.item.hover.color') || dt('text.color'),
+                        },
+                        '.p-menuitem-link:not(.p-disabled):hover .p-menuitem-icon': {
+                            color: dt('menu.item.hover.color') || dt('text.color'),
+                        },
+                        '.p-menuitem-link:not(.p-disabled):hover .p-submenu-icon': {
+                            color: dt('menu.item.hover.color') || dt('text.color'),
+                        },
+                        '.p-menuitem-link:focus': {
+                            outline: '0 none',
+                            outlineOffset: '0',
+                            boxShadow: 'none',
+                        },
+                        '.p-menubar .p-menuitem-link': {
+                            borderRadius: '4px',
+                        },
+                        '.p-menubar .p-menuitem-link:not(.p-disabled):hover': {
+                            background: dt('menu.item.hover.background'),
+                        },
+                        '.p-menubar .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text': {
+                            color: dt('menu.item.hover.color') || dt('text.color'),
+                        },
+                        '.p-menubar .p-menuitem-link:not(.p-disabled):hover .p-menuitem-icon': {
+                            color: dt('menu.item.hover.color') || dt('text.color'),
+                        },
+                        '.p-menubar .p-menuitem-link:not(.p-disabled):hover .p-submenu-icon': {
+                            color: dt('menu.item.hover.color') || dt('text.color'),
+                        },
+                        '.p-menubar .p-menuitem-link:focus': {
+                            outline: '0 none',
+                            outlineOffset: '0',
+                            boxShadow: 'none',
+                        },
+                        '.p-tabmenu .p-tabmenu-ink-bar': {
+                            display: 'none',
+                        },
+                        '.p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link': {
+                            border: 'solid',
+                            borderWidth: '1px',
+                            borderBlockEndWidth: '2px',
+                            borderRadius: '6px',
+                            margin: '0 0 -1px 0',
+                        },
+                        '.p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link:not(.p-disabled):hover': {
+                            background: dt('tabmenu.item.hover.background'),
+                            borderBlockEndColor: dt('tabmenu.item.hover.border.color'),
+                            color: dt('tabmenu.item.hover.color'),
+                        },
+                        '.p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link:not(.p-highlight):hover': {
+                            background: dt('tabmenu.item.hover.background'),
+                            borderBlockEndColor: dt('tabmenu.item.hover.border.color'),
+                            color: dt('tabmenu.item.hover.color'),
+                        },
+                        '.p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link:focus': {
+                            outline: '0 none',
+                            outlineOffset: '0',
+                            boxShadow: 'none',
+                        },
+                        '.p-tabmenu .p-tabmenu-nav .p-tabmenuitem.p-highlight .p-menuitem-link': {
+                            background: dt('tabmenu.item.active.background'),
+                            borderBlockEndColor: dt('tabmenu.item.active.border.color'),
+                            color: dt('tabmenu.item.active.color'),
+                        },
+                        '.p-tabmenu .p-tabmenu-nav-button.p-link': {
+                            borderRadius: '6px',
+                            color: dt('text.muted.color'),
+                            background: dt('tabmenu.nav.button.background'),
+                            boxShadow: dt('card.shadow'),
+                            transition: dt('form.field.transition'),
+                            margin: '0.143rem',
+                        },
+                        '.p-tabmenu .p-tabmenu-nav-button.p-link:hover': {
+                            color: dt('text.color'),
+                            background: dt('tabmenu.nav.button.hover.background'),
+                        },
+                        '.p-tabmenu.p-tabmenu-scrollable .p-tabmenu-nav': {
+                            'scroll-padding-inline': '2.5rem',
+                        },
+                        '.p-tabmenu.p-tabmenu-scrollable .p-tabmenu-nav .p-tabmenuitem': {
+                            'scroll-snap-align': 'start',
+                        },
+                        '.p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link': {
+                            borderRadius: '6px',
+                        },
+                        '.p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link:not(.p-disabled):hover': {
+                            background: dt('menubar.item.hover.background'),
+                            color: dt('menubar.item.hover.color'),
+                        },
+                        '.p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link .p-submenu-icon': {
+                            color: dt('menubar.item.icon.color'),
+                        },
+                        '.p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link:not(.p-disabled):hover .p-submenu-icon': {
+                            color: dt('menubar.item.icon.hover.color'),
+                        },
+                        '.p-menubar .p-menubar-root-list > .p-menuitem > .p-menuitem-link:focus': {
+                            outline: '0 none',
+                            outlineOffset: '0',
+                            boxShadow: 'none',
+                        },
+                        '.p-menubar .p-menubar-root-list > .p-menuitem.p-menuitem-active > .p-menuitem-link': {
+                            background: dt('menubar.item.active.background'),
+                            color: dt('menubar.item.active.color'),
+                        },
+                        '.p-menubar .p-menubar-root-list > .p-menuitem.p-menuitem-active > .p-menuitem-link .p-submenu-icon': {
+                            color: dt('menubar.item.active.icon.color'),
+                        },
+                        '.p-menubar .p-menubar-root-list > .p-menuitem.p-menuitem-active > .p-menuitem-link:hover': {
+                            background: dt('menubar.item.active.hover.background'),
+                            color: dt('menubar.item.active.hover.color'),
+                        },
+                        '.p-menubar .p-menubar-root-list > .p-menuitem.p-menuitem-active > .p-menuitem-link:hover .p-submenu-icon': {
+                            color: dt('menubar.item.active.hover.icon.color'),
+                        },
+                        '.p-tieredmenu .p-menuitem-link': {
+                            border: '0 none',
+                            borderRadius: '4px',
+                        },
+                        '.p-tieredmenu .p-menuitem-link:not(.p-disabled):hover': {
+                            background: dt('menu.item.hover.background'),
+                        },
+                        '.p-tieredmenu .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text': {
+                            color: dt('menu.item.hover.color') || dt('text.color'),
+                        },
+                        '.p-tieredmenu .p-menuitem-link:not(.p-disabled):hover .p-menuitem-icon': {
+                            color: dt('menu.item.hover.color') || dt('text.color'),
+                        },
+                        '.p-tieredmenu .p-menuitem-link:not(.p-disabled):hover .p-submenu-icon': {
+                            color: dt('menu.item.hover.color') || dt('text.color'),
+                        },
+                        '.p-tieredmenu .p-menuitem-link:focus': {
+                            outline: '0 none',
+                            outlineOffset: '0',
+                            boxShadow: 'none',
+                        },
+                        '.p-tieredmenu.p-tieredmenu-overlay': {
+                            'scroll-padding-top': '2.5rem',
+                        },
+                        '.p-tieredmenu.p-tieredmenu-overlay .p-menuitem': {
+                            'scroll-snap-align': 'start',
+                        },
+                        '.p-contextmenu .p-menuitem-link': {
+                            border: '0 none',
+                            borderRadius: '4px',
+                        },
+                        '.p-contextmenu .p-menuitem-link:not(.p-disabled):hover': {
+                            background: dt('menu.item.hover.background'),
+                        },
+                        '.p-contextmenu .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text': {
+                            color: dt('menu.item.hover.color') || dt('text.color'),
+                        },
+                        '.p-contextmenu .p-menuitem-link:not(.p-disabled):hover .p-menuitem-icon': {
+                            color: dt('menu.item.hover.color') || dt('text.color'),
+                        },
+                        '.p-contextmenu .p-menuitem-link:not(.p-disabled):hover .p-submenu-icon': {
+                            color: dt('menu.item.hover.color') || dt('text.color'),
+                        },
+                        '.p-contextmenu .p-menuitem-link:focus': {
+                            outline: '0 none',
+                            outlineOffset: '0',
+                            boxShadow: 'none',
+                        },
+                        '.p-contextmenu.p-contextmenu-overlay': {
+                            'scroll-padding-top': '2.5rem',
+                        },
+                        '.p-contextmenu.p-contextmenu-overlay .p-menuitem': {
+                            'scroll-snap-align': 'start',
+                        },
+                        '.p-megamenu .p-megamenu-panel': {
+                            'scroll-padding-top': '2.5rem',
+                        },
+                        '.p-megamenu .p-megamenu-panel .p-menuitem': {
+                            'scroll-snap-align': 'start',
+                        },
+                        '.p-megamenu .p-menuitem-link': {
+                            border: '0 none',
+                            borderRadius: '4px',
+                        },
+                        '.p-megamenu .p-menuitem-link:not(.p-disabled):hover': {
+                            background: dt('menu.item.hover.background'),
+                        },
+                        '.p-megamenu .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text': {
+                            color: dt('menu.item.hover.color') || dt('text.color'),
+                        },
+                        '.p-megamenu .p-menuitem-link:not(.p-disabled):hover .p-menuitem-icon': {
+                            color: dt('menu.item.hover.color') || dt('text.color'),
+                        },
+                        '.p-megamenu .p-menuitem-link:not(.p-disabled):hover .p-submenu-icon': {
+                            color: dt('menu.item.hover.color') || dt('text.color'),
+                        },
+                        '.p-megamenu .p-menuitem-link:focus': {
+                            outline: '0 none',
+                            outlineOffset: '0',
+                            boxShadow: 'none',
+                        },
+                        '.p-megamenu .p-megamenu-root-list > .p-menuitem > .p-menuitem-link': {
+                            border: '0 none',
+                            borderRadius: '6px',
+                        },
+                        '.p-megamenu .p-megamenu-root-list > .p-menuitem > .p-menuitem-link:not(.p-disabled):hover': {
+                            background: dt('menubar.item.hover.background'),
+                            color: dt('menubar.item.hover.color'),
+                        },
+                        '.p-megamenu .p-megamenu-root-list > .p-menuitem > .p-menuitem-link:focus': {
+                            outline: '0 none',
+                            outlineOffset: '0',
+                            boxShadow: 'none',
+                        },
+                        '.p-megamenu .p-megamenu-root-list > .p-menuitem.p-menuitem-active > .p-menuitem-link': {
+                            background: dt('menubar.item.active.background'),
+                            color: dt('menubar.item.active.color'),
+                        },
+                        '.p-megamenu .p-megamenu-root-list > .p-menuitem.p-menuitem-active > .p-menuitem-link:hover': {
+                            background: dt('menubar.item.active.hover.background'),
+                            color: dt('menubar.item.active.hover.color'),
+                        },
+                        '.p-overlaypanel': {
+                            'scroll-padding-top': '2.5rem',
+                        },
+                        '.p-overlaypanel .p-overlaypanel-content': {
+                            'scroll-snap-align': 'start',
+                        },
+                        '.p-orderlist .p-orderlist-list .p-orderlist-item': {
+                            border: '0 none',
+                            borderRadius: '6px',
+                        },
+                        '.p-orderlist .p-orderlist-list .p-orderlist-item:focus': {
+                            outline: '0 none',
+                            outlineOffset: '0',
+                            boxShadow: 'none',
+                        },
+                        '.p-organizationchart .p-organizationchart-node-content': {
+                            padding: '0.75rem 1rem',
+                            border: '0 none',
+                            borderRadius: '6px',
+                        },
+                        '.p-organizationchart .p-organizationchart-node-content:focus': {
+                            outline: '0 none',
+                            outlineOffset: '0',
+                            boxShadow: 'none',
+                        },
+                        '.p-paginator .p-paginator-pages .p-paginator-page': {
+                            border: '1px solid transparent',
+                            borderRadius: '6px',
+                            transition: dt('form.field.transition'),
+                            minWidth: '2.5rem',
+                        },
+                        '.p-paginator .p-paginator-pages .p-paginator-page.p-highlight': {
+                            background: dt('highlight.background'),
+                            color: dt('highlight.color'),
+                            borderBlockEndColor: 'transparent',
+                        },
+                        '.p-paginator .p-paginator-pages .p-paginator-page:not(.p-highlight):hover': {
+                            background: dt('paginator.page.hover.background'),
+                            color: dt('paginator.page.hover.color'),
+                        },
+                        '.p-paginator .p-paginator-current': {
+                            border: '1px solid transparent',
+                            borderRadius: '6px',
+                        },
+                        '.p-picklist .p-picklist-list .p-picklist-item': {
+                            border: '0 none',
+                            borderRadius: '6px',
+                        },
+                        '.p-picklist .p-picklist-list .p-picklist-item:focus': {
+                            outline: '0 none',
+                            outlineOffset: '0',
+                            boxShadow: 'none',
+                        },
+                        '.p-panelmenu .p-panelmenu-header .p-panelmenu-header-content': {
+                            border: '0 none',
+                            borderRadius: '6px',
+                        },
+                        '.p-panelmenu .p-panelmenu-header .p-panelmenu-header-content .p-panelmenu-header-action': {
+                            padding: '1rem 1.125rem',
+                            borderRadius: '6px',
+                            transition: dt('form.field.transition'),
+                        },
+                        '.p-panelmenu .p-panelmenu-header .p-panelmenu-header-content .p-panelmenu-header-action:focus': {
+                            outline: '0 none',
+                            outlineOffset: '0',
+                            boxShadow: 'none',
+                        },
+                        '.p-panelmenu .p-panelmenu-content .p-menuitem .p-menuitem-link': {
+                            border: '0 none',
+                            borderRadius: '6px',
+                            transition: dt('form.field.transition'),
+                        },
+                        '.p-panelmenu .p-panelmenu-content .p-menuitem .p-menuitem-link:not(.p-disabled):hover': {
+                            background: dt('menu.item.hover.background'),
+                        },
+                        '.p-panelmenu .p-panelmenu-content .p-menuitem .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text': {
+                            color: dt('menu.item.hover.color') || dt('text.color'),
+                        },
+                        '.p-panelmenu .p-panelmenu-content .p-menuitem .p-menuitem-link:not(.p-disabled):hover .p-menuitem-icon': {
+                            color: dt('menu.item.hover.color') || dt('text.color'),
+                        },
+                        '.p-panelmenu .p-panelmenu-content .p-menuitem .p-menuitem-link:not(.p-disabled):hover .p-submenu-icon': {
+                            color: dt('menu.item.hover.color') || dt('text.color'),
+                        },
+                        '.p-panelmenu .p-panelmenu-content .p-menuitem .p-menuitem-link:focus': {
+                            outline: '0 none',
+                            outlineOffset: '0',
+                            boxShadow: 'none',
+                        },
+                        '.p-slidemenu .p-menuitem-link': {
+                            border: '0 none',
+                            borderRadius: '4px',
+                        },
+                        '.p-slidemenu .p-menuitem-link:not(.p-disabled):hover': {
+                            background: dt('menu.item.hover.background'),
+                        },
+                        '.p-slidemenu .p-menuitem-link:not(.p-disabled):hover .p-menuitem-text': {
+                            color: dt('menu.item.hover.color') || dt('text.color'),
+                        },
+                        '.p-slidemenu .p-menuitem-link:not(.p-disabled):hover .p-menuitem-icon': {
+                            color: dt('menu.item.hover.color') || dt('text.color'),
+                        },
+                        '.p-slidemenu .p-menuitem-link:not(.p-disabled):hover .p-submenu-icon': {
+                            color: dt('menu.item.hover.color') || dt('text.color'),
+                        },
+                        '.p-slidemenu .p-menuitem-link:focus': {
+                            outline: '0 none',
+                            outlineOffset: '0',
+                            boxShadow: 'none',
+                        },
+                        '.p-slidemenu.p-slidemenu-overlay': {
+                            'scroll-padding-top': '2.5rem',
+                        },
+                        '.p-slidemenu.p-slidemenu-overlay .p-menuitem': {
+                            'scroll-snap-align': 'start',
+                        },
+                        '.p-steps .p-steps-item .p-menuitem-link': {
+                            border: '0 none',
+                            borderRadius: '6px',
+                            transition: dt('form.field.transition'),
+                        },
+                        '.p-steps .p-steps-item .p-menuitem-link .p-steps-number': {
+                            border: '1px solid transparent',
+                            borderRadius: '50%',
+                            width: '2rem',
+                            height: '2rem',
+                        },
+                        '.p-steps .p-steps-item .p-menuitem-link:not(.p-disabled):focus': {
+                            outline: '0 none',
+                            outlineOffset: '0',
+                            boxShadow: 'none',
+                        },
+                        '.p-steps .p-steps-item.p-highlight .p-steps-number': {
+                            background: dt('highlight.background'),
+                            color: dt('highlight.color'),
+                        },
+                        '.p-steps .p-steps-item.p-highlight .p-steps-title': {
+                            fontWeight: '600',
+                            color: dt('text.color'),
+                        },
+                        '.p-tabview .p-tabview-nav li .p-tabview-nav-link': {
+                            border: 'solid',
+                            borderWidth: '1px',
+                            borderBlockEndWidth: '2px',
+                            borderRadius: '6px',
+                            margin: '0 0 -1px 0',
+                            padding: '0.75rem 1rem',
+                        },
+                        '.p-tabview .p-tabview-nav li .p-tabview-nav-link:not(.p-disabled):focus': {
+                            outline: '0 none',
+                            outlineOffset: '0',
+                            boxShadow: 'none',
+                        },
+                        '.p-tabview .p-tabview-nav li:not(.p-highlight):not(.p-disabled):hover .p-tabview-nav-link': {
+                            background: dt('tabview.nav.link.hover.background'),
+                            borderBlockEndColor: dt('tabview.nav.link.hover.border.color'),
+                            color: dt('tabview.nav.link.hover.color'),
+                        },
+                        '.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link': {
+                            background: dt('tabview.nav.link.active.background'),
+                            borderBlockEndColor: dt('tabview.nav.link.active.border.color'),
+                            color: dt('tabview.nav.link.active.color'),
+                        },
+                        '.p-terminal .p-terminal-command': {
+                            border: '0 none',
+                            borderRadius: '6px',
+                        },
+                        '.p-terminal .p-terminal-command:focus': {
+                            outline: '0 none',
+                            outlineOffset: '0',
+                            boxShadow: 'none',
+                        },
+                        '.p-terminal .p-terminal-prompt': {
+                            margin: '0 0.25rem 0 0',
+                        },
+                        '.p-treeselect-panel .p-tree': {
+                            padding: '0.25rem 0',
+                        },
+                        '.p-treeselect-panel .p-treeselect-items-wrapper .p-tree': {
+                            padding: '0',
+                        },
+                        '.p-treeselect-panel .p-treeselect-items-wrapper .p-treeselect-empty-message': {
+                            padding: '0.5rem 1rem',
+                        },
+                        '.p-timeline .p-timeline-event-marker': {
+                            border: '2px solid transparent',
+                            borderRadius: '50%',
+                            width: '1.125rem',
+                            height: '1.125rem',
+                            background: dt('timeline.event.marker.background') || dt('primary.color'),
+                            boxShadow: `0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12)`,
+                        },
+                        '.p-togglebutton.p-button': {
+                            padding: '0.5rem 1rem',
+                            border: '1px solid transparent',
+                            borderRadius: '6px',
+                            transition: dt('form.field.transition'),
+                        },
+                        '.p-togglebutton.p-button .p-button-label': {
+                            font: dt('togglebutton.label.font'),
+                        },
+                        '.p-togglebutton.p-button .p-button-icon': {
+                            color: dt('togglebutton.icon.color'),
+                        },
+                        '.p-togglebutton.p-button:not(.p-disabled):not(.p-highlight):hover': {
+                            background: dt('togglebutton.hover.background'),
+                            borderColor: dt('togglebutton.hover.border.color'),
+                            color: dt('togglebutton.hover.color'),
+                        },
+                        '.p-togglebutton.p-button:not(.p-disabled):not(.p-highlight):hover .p-button-icon': {
+                            color: dt('togglebutton.icon.hover.color'),
+                        },
+                        '.p-togglebutton.p-button.p-highlight': {
+                            background: dt('togglebutton.active.background'),
+                            borderColor: dt('togglebutton.active.border.color'),
+                            color: dt('togglebutton.active.color'),
+                        },
+                        '.p-togglebutton.p-button.p-highlight .p-button-icon': {
+                            color: dt('togglebutton.icon.active.color'),
+                        },
+                        '.p-togglebutton.p-button.p-highlight:hover': {
+                            background: dt('togglebutton.active.hover.background'),
+                            borderColor: dt('togglebutton.active.hover.border.color'),
+                            color: dt('togglebutton.active.hover.color'),
+                        },
+                        '.p-togglebutton.p-button.p-highlight:hover .p-button-icon': {
+                            color: dt('togglebutton.icon.active.hover.color'),
+                        },
+                        '.p-datatable .p-datatable-tbody > tr.p-datatable-dragpoint-top > td': {
+                            boxShadow: `inset 0 2px 0 0 ${dt('primary.color')}`,
+                        },
+                        '.p-datatable .p-datatable-tbody > tr.p-datatable-dragpoint-bottom > td': {
+                            boxShadow: `inset 0 -2px 0 0 ${dt('primary.color')}`,
+                        },
+                        '.p-datatable .p-datatable-tbody > tr.p-datatable-dragpoint-top > td .p-row-toggler': {
+                            color: dt('primary.color'),
+                        },
+                        '.p-datatable .p-datatable-tbody > tr.p-datatable-dragpoint-top > td .p-row-toggler:hover': {
+                            color: dt('primary.color'),
+                        },
+                        '.p-dataview .p-dataview-content': {
+                            border: '0 none',
+                            borderRadius: '0 0 6px 6px',
+                        },
+                        '.p-column-filter-overlay-menu': {
+                            'scroll-padding-top': '2.5rem',
+                        },
+                        '.p-column-filter-overlay-menu .p-column-filter-operator': {
+                            'scroll-snap-align': 'start',
+                        },
+                        '.p-column-filter-overlay-menu .p-column-filter-constraints .p-column-filter-constraint': {
+                            'scroll-snap-align': 'start',
+                        },
+                        '.p-tree .p-tree-container .p-treenode .p-treenode-content.p-treenode-selectable:not(.p-treenode-selected):hover': {
+                            background: dt('tree.item.hover.background'),
+                        },
+                        '.p-tree .p-tree-container .p-treenode .p-treenode-content.p-treenode-selectable:not(.p-treenode-selected):hover .p-tree-toggler': {
+                            color: dt('tree.item.hover.color') || dt('text.color'),
+                        },
+                        '.p-tree .p-tree-container .p-treenode .p-treenode-content.p-treenode-selectable:not(.p-treenode-selected):hover .p-treenode-icon': {
+                            color: dt('tree.item.hover.color') || dt('text.color'),
+                        },
+                        '.p-tree .p-tree-container .p-treenode .p-treenode-content:focus': {
+                            outline: '0 none',
+                            outlineOffset: '0',
+                            boxShadow: 'none',
+                        },
+                        '.p-tree .p-tree-container .p-treenode .p-treenode-content.p-treenode-selected': {
+                            background: dt('highlight.background'),
+                            color: dt('highlight.color'),
+                        },
+                        '.p-tree .p-tree-container .p-treenode .p-treenode-content.p-treenode-selected .p-tree-toggler': {
+                            color: dt('highlight.color'),
+                        },
+                        '.p-tree .p-tree-container .p-treenode .p-treenode-content.p-treenode-selected .p-tree-toggler:hover': {
+                            color: dt('highlight.color'),
+                        },
+                        '.p-tree .p-tree-container .p-treenode .p-treenode-content.p-treenode-selected .p-treenode-icon': {
+                            color: dt('highlight.color'),
+                        },
+                        '.p-treetable .p-treetable-tbody > tr.p-treetable-dragpoint-top > td': {
+                            boxShadow: `inset 0 2px 0 0 ${dt('primary.color')}`,
+                        },
+                        '.p-treetable .p-treetable-tbody > tr.p-treetable-dragpoint-bottom > td': {
+                            boxShadow: `inset 0 -2px 0 0 ${dt('primary.color')}`,
+                        },
+                        '.p-treetable .p-treetable-tbody > tr.p-treetable-dragpoint-top > td .p-row-toggler': {
+                            color: dt('primary.color'),
+                        },
+                        '.p-treetable .p-treetable-tbody > tr.p-treetable-dragpoint-top > td .p-row-toggler:hover': {
+                            color: dt('primary.color'),
+                        },
                     };
-                }
-            }
+                },
+            };
         },
         updateColors(type, color) {
             if (type === 'primary') this.selectedPrimaryColor = color.name;
@@ -656,10 +1298,9 @@ export default {
     created() {
         this.updateColors('primary', this.primaryColors[10]);
     },
-    // mounted() {
-    //     console.log('mounted');
-    //     this.updateColors('primary', this.primaryColors[10]);
-    // }
+    mounted() {
+        console.log('mounted');
+        this.updateColors('primary', this.primaryColors[10]);
+    }
 };
-
 </script>

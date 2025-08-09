@@ -6,7 +6,7 @@
             option-label="name" 
             option-value="code"
             @change="changeLocale"
-            placeholder="Select a Language"
+            :placeholder="$t('language.select_placeholder')"
             :pt="{
                 root: { class: 'language-select' },
                 input: { class: 'language-select-input' }
@@ -33,11 +33,15 @@
 
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { setI18nLanguage } from '../i18n';
+
+const { t } = useI18n();
 
 const currentLocale = ref('en');
 const availableLocales = ref([
-    { name: 'English', code: 'en' },
-    { name: '中文', code: 'zh' },
+    { name: t('language.english'), code: 'en' },
+    { name: t('language.chinese'), code: 'zh' },
     // { name: '日本語', code: 'ja' },
     // { name: 'Español', code: 'es' },
     // { name: 'Français', code: 'fr' }
@@ -55,12 +59,28 @@ onMounted(() => {
             currentLocale.value = browserLocale;
         }
     }
+    
+    // 更新语言显示名称
+    updateLocaleNames();
 });
 
-const changeLocale = (event) => {
+const updateLocaleNames = () => {
+    availableLocales.value = [
+        { name: t('language.english'), code: 'en' },
+        { name: t('language.chinese'), code: 'zh' },
+    ];
+};
+
+const changeLocale = async (event) => {
     const newLocale = event.value;
     currentLocale.value = newLocale;
     localStorage.setItem('preferredLocale', newLocale);
+    
+    // 设置i18n语言
+    await setI18nLanguage(newLocale);
+    
+    // 更新语言显示名称
+    updateLocaleNames();
     
     // 发出语言更改事件，以便其他组件可以监听
     const localeChangeEvent = new CustomEvent('localeChanged', { 
