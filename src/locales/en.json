@@ -1,8 +1,9 @@
 {
+  "error_msg": {
+    "common_error": "Please check your network connection or try restarting the device!"
+  },
   "language": {
-    "select_placeholder": "Select a Language",
-    "english": "English",
-    "chinese": "中文"
+    "select_placeholder": "Select a Language"
   },
   "theme": {
     "light": "Light",

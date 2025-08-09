@@ -40,8 +40,8 @@ const { t } = useI18n();
 
 const currentLocale = ref('en');
 const availableLocales = ref([
-    { name: t('language.english'), code: 'en' },
-    { name: t('language.chinese'), code: 'zh' },
+    { name: 'English', code: 'en' },
+    { name: '中文', code: 'zh' },
     // { name: '日本語', code: 'ja' },
     // { name: 'Español', code: 'es' },
     // { name: 'Français', code: 'fr' }
@@ -59,17 +59,7 @@ onMounted(() => {
             currentLocale.value = browserLocale;
         }
     }
-    
-    // 更新语言显示名称
-    updateLocaleNames();
 });
-
-const updateLocaleNames = () => {
-    availableLocales.value = [
-        { name: t('language.english'), code: 'en' },
-        { name: t('language.chinese'), code: 'zh' },
-    ];
-};
 
 const changeLocale = async (event) => {
     const newLocale = event.value;
@@ -78,9 +68,6 @@ const changeLocale = async (event) => {
     
     // 设置i18n语言
     await setI18nLanguage(newLocale);
-    
-    // 更新语言显示名称
-    updateLocaleNames();
     
     // 发出语言更改事件，以便其他组件可以监听
     const localeChangeEvent = new CustomEvent('localeChanged', { 

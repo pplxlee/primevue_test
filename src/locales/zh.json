@@ -1,8 +1,9 @@
 {
+  "error_msg": {
+    "common_error": "请检查网络连接或尝试重启设备！"
+  },
   "language": {
-    "select_placeholder": "选择语言",
-    "english": "English",
-    "chinese": "中文"
+    "select_placeholder": "选择语言"
   },
   "theme": {
     "light": "浅色",

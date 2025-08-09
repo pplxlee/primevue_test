@@ -5,7 +5,7 @@
         </div>
         <!-- 错误信息 -->
         <Message severity="error" v-if="camera_settings.error_flag" class="setting-error">
-            {{ camera_settings.error_message }}
+            {{ camera_settings.error_message ? camera_settings.error_message : $t('error_msg.common_error') }}
         </Message>
         <!-- 设置内容 -->
         <div class="setting-body flex flex-col space-y-4">
