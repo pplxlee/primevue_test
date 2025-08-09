@@ -40,11 +40,11 @@ const { t } = useI18n();
 const title = ref('PR1');
 const items = computed(() => [
     {
-        label: t('menu.home'),
+        label: t('camera.base_settings'),
         route: '/',
     },
     {
-        label: t('menu.camera'),
+        label: t('camera.advanced_settings'),
         route: '/CameraAdvancedSettings',
     },
     // {

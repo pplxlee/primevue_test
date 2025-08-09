@@ -43,10 +43,5 @@
     "reboot": "Reboot Camera",
     "reboot_camera": "Reboot Camera",
     "confirm_reboot": "Confirm reboot camera?"
-  },
-  "menu": {
-    "home": "Home",
-    "camera": "Camera",
-    "wifi": "Wi-Fi"
   }
 }

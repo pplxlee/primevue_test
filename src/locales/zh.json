@@ -43,10 +43,5 @@
     "reboot": "重启相机",
     "reboot_camera": "重启相机",
     "confirm_reboot": "是否重启相机"
-  },
-  "menu": {
-    "home": "首页",
-    "camera": "相机",
-    "wifi": "Wi-Fi"
   }
 }
