@@ -8,37 +8,47 @@
             </template>
             <template #item="{ item, props }">
                 <div class="flex mr-4 ml-4 items-center">
-                <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
-                    <a v-ripple :href="href" v-bind="props.action" @click="navigate">
+                    <router-link v-if="item.route" v-slot="{ href, navigate }" :to="item.route" custom>
+                        <a v-ripple :href="href" v-bind="props.action" @click="navigate">
+                            <span>{{ item.label }}</span>
+                        </a>
+                    </router-link>
+                    <a v-else v-ripple :href="item.url" :target="item.target" v-bind="props.action">
                         <span>{{ item.label }}</span>
+                        <span v-if="hasSubmenu" class="pi pi-fw pi-angle-down" />
                     </a>
-                </router-link>
-                <a v-else v-ripple :href="item.url" :target="item.target" v-bind="props.action">
-                    <span>{{ item.label }}</span>
-                    <span v-if="hasSubmenu" class="pi pi-fw pi-angle-down" />
-                </a></div>
+                </div>
             </template>
             <template #end>
-                <ThemeSwitcher class="hidden-theme-switcher"/>
+                <div class="flex items-center">
+                    <ThemeSwitcher v-show="false" class="hidden-theme-switcher" />
+                    <LanguageSwitcher class="language-switcher" />
+                </div>
             </template>
         </Menubar>
     </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, computed } from "vue";
+import { useI18n } from 'vue-i18n';
+import LanguageSwitcher from './LanguageSwitcher.vue';
+import ThemeSwitcher from './ThemeSwitcher.vue';
+
+const { t } = useI18n();
+
 const title = ref('PR1');
-const items = ref([
+const items = computed(() => [
     {
-        label: '基础设置',
+        label: t('camera.base_settings'),
         route: '/',
     },
     {
-        label: '高级设置',
+        label: t('camera.advanced_settings'),
         route: '/CameraAdvancedSettings',
     },
     // {
-    //     label: '连接WIFI',
+    //     label: t('menu.wifi'),
     //     route: '/WifiConnection',
     // }
 ]);

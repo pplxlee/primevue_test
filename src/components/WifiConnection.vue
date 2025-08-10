@@ -1,7 +1,7 @@
 <template>
     <div class="card space-y-8">
         <div class="setting-header text-2xl font-bold">
-            连接WIFI
+            {{ $t('wifi.title') }}
         </div>
         <!-- 错误信息 -->
         <Message severity="error" v-if="wifi_connection.error_flag" class="setting-error">
@@ -13,37 +13,40 @@
                 class="w-full md:w-full" listStyle="max-height:300px">
                 <template #option="slotProps">
                     <div class="w-4/12">{{ slotProps.option.ssid }}</div>
-                    <div class="w-4/12">信号强度：{{ slotProps.option.strength }}</div>
+                    <div class="w-4/12">{{ $t('wifi.signal_strength') }}：{{ slotProps.option.strength }}</div>
                     <!--右对齐-->
                     <div class="w-4/12">
-                        <div v-if=slotProps.option.connected>已连接</div>
-                        <div v-else>未连接</div>
+                        <div v-if=slotProps.option.connected>{{ $t('wifi.connected') }}</div>
+                        <div v-else>{{ $t('wifi.not_connected') }}</div>
                     </div>
                 </template>
             </Listbox>
-            <Button v-if="selected_wifi === null" label="连接" disabled />
-            <Button v-else-if="selected_wifi.connected" label="断开" @click="onDisconnectButtonClicked" />
-            <Button v-else label="连接" @click="connect_dialog_visible = true" />
+            <Button v-if="selected_wifi === null" :label="$t('wifi.connect')" disabled />
+            <Button v-else-if="selected_wifi.connected" :label="$t('wifi.disconnect')" @click="onDisconnectButtonClicked" />
+            <Button v-else :label="$t('wifi.connect')" @click="connect_dialog_visible = true" />
         </div>
     </div>
-    <Dialog v-model:visible="connect_dialog_visible" modal header="连接WIFI" :style="{ width: '25rem' }" @keyup.enter="onConnectButtonClicked">
+    <Dialog v-model:visible="connect_dialog_visible" modal :header="$t('wifi.title')" :style="{ width: '25rem' }" @keyup.enter="onConnectButtonClicked">
         <div class="flex items-center gap-4 mb-4">
-            <label class="font-semibold w-24">SSID</label>
+            <label class="font-semibold w-24">{{ $t('wifi.network_name') }}</label>
             <label class="font-semibold w-24">{{ selected_wifi.ssid }}</label>
         </div>
         <div class="flex items-center gap-4 mb-8">
-            <label for="password" class="font-semibold w-24">密码</label>
+            <label for="password" class="font-semibold w-24">{{ $t('wifi.password') }}</label>
             <Password id="password" :feedback="false" toggleMask v-model:modelValue="password" autofocus/>
         </div>
         <div class="flex justify-end gap-2">
-            <Button type="button" label="取消" severity="secondary" @click="connect_dialog_visible = false"></Button>
-            <Button type="button" label="连接" @click="onConnectButtonClicked"></Button>
+            <Button type="button" :label="$t('wifi.cancel')" severity="secondary" @click="connect_dialog_visible = false"></Button>
+            <Button type="button" :label="$t('wifi.connect')" @click="onConnectButtonClicked"></Button>
         </div>
     </Dialog>
 </template>
 
 <script setup>
 import { reactive, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n();
 
 const connect_dialog_visible = ref(false);
 const password = ref('');
