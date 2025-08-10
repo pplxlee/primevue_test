@@ -12,7 +12,9 @@ import ToastService from 'primevue/toastservice';
 import App from "./App.vue";
 import AppState from './plugins/appState.js';
 import Noir from './presets/Noir.js';
+import { installI18n } from './i18n';
 
+import LanguageSwitcher from './components/LanguageSwitcher.vue';
 import ThemeSwitcher from './components/ThemeSwitcher.vue';
 import CameraSetting from './components/CameraSetting.vue';
 import CameraBaseSettings from './components/CameraBaseSettings.vue';
@@ -38,6 +40,9 @@ app.use(ConfirmationService);
 app.use(ToastService);
 app.use(DialogService);
 
+installI18n(app);
+
+app.component('LanguageSwitcher', LanguageSwitcher);
 app.component('ThemeSwitcher', ThemeSwitcher);
 app.component('CameraSetting', CameraSetting);
 app.component('CameraBaseSettings', CameraBaseSettings);

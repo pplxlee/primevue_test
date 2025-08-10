@@ -1,7 +1,7 @@
 <template>
     <div class="setting-item flex items-center justify-between">
         <div class="setting-item-left flex items-center w-4/12">
-            {{ setting.description }}
+            {{ setting.label }}
         </div>
         <div class="setting-item-right flex items-center w-8/12 min-w-48">
             <div v-if="setting.type === 'select'" class="w-full">
