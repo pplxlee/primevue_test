@@ -37,7 +37,7 @@ import ThemeSwitcher from './ThemeSwitcher.vue';
 
 const { t } = useI18n();
 
-const title = ref('PR1');
+const title = ref('PR1 Pro');
 const items = computed(() => [
     {
         label: t('camera.base_settings'),
