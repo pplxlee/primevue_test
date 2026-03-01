@@ -37,7 +37,7 @@ import ThemeSwitcher from './ThemeSwitcher.vue';
 
 const { t } = useI18n();
 
-const title = ref('PY505');
+const title = ref('PY503');
 const items = computed(() => [
     {
         label: t('camera.base_settings'),
