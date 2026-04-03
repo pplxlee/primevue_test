@@ -36,11 +36,9 @@
     "settings": {
       "exposure_mode": "Exposure Mode",
       "exposure_mode_values": {
-        "32768": "Intelligent Auto",
-        "2": "Program Auto",
-        "3": "Aperture Priority",
-        "4": "Shutter Priority",
-        "1": "Manual Exposure"
+        "1": "M Manual",
+        "131075": "A Aperture Priority",
+        "196612": "S Shutter Priority"
       },
       "ISO": "ISO",
       "ISO_values": {
@@ -70,31 +68,6 @@
       },
       "shutter": "Shutter",
       "shutter_values": {
-        "655370": "1",
-        "524298": "0.8",
-        "393226": "0.6",
-        "327690": "0.5",
-        "262154": "0.4",
-        "65539": "1/3",
-        "65540": "1/4",
-        "65541": "1/5",
-        "65542": "1/6",
-        "65544": "1/8",
-        "65546": "1/10",
-        "65549": "1/13",
-        "65551": "1/15",
-        "65556": "1/20",
-        "65561": "1/25",
-        "65566": "1/30",
-        "65576": "1/40",
-        "65586": "1/50",
-        "65596": "1/60",
-        "65616": "1/80",
-        "65636": "1/100",
-        "65661": "1/125",
-        "65696": "1/160",
-        "65736": "1/200",
-        "65786": "1/250",
         "65856": "1/320",
         "65936": "1/400",
         "66036": "1/500",
@@ -106,21 +79,23 @@
         "67536": "1/2000",
         "68036": "1/2500",
         "68736": "1/3200",
-        "69536": "1/4000"
+        "69536": "1/4000",
+        "70536": "1/5000",
+        "71936": "1/6400",
+        "73536": "1/8000"
       },
       "white_balance": "White Balance",
       "white_balance_values": {
-        "0": "AWB",
-        "17": "Daylight",
-        "18": "Shadow",
-        "19": "Cloudy",
-        "20": "Tungsten",
-        "33": "Fluorescent WarmWhite",
-        "34": "Fluorescent CoolWhite",
-        "35": "Fluorescent DayWhite",
-        "36": "Fluorescent Daylight",
-        "1": "Underwater Auto",
-        "256": "ColorTemp"
+        "2": "AWB",
+        "4": "Daylight",
+        "32785": "Shadow",
+        "32784": "Cloudy",
+        "6": "Tungsten",
+        "32769": "Fluorescent WarmWhite",
+        "32770": "Fluorescent CoolWhite",
+        "32771": "Fluorescent DayWhite",
+        "32772": "Fluorescent Daylight",
+        "32816": "Underwater Auto"
       },
       "image_size": "Image Size",
       "image_size_values": {
@@ -137,10 +112,9 @@
       },
       "image_quality": "Image Quality",
       "image_quality_values": {
-        "4": "Extra fine",
-        "3": "Fine",
-        "2": "Standard",
-        "1": "Light"
+        "2": "Fine",
+        "3": "Standard",
+        "4": "Light"
       },
       "image_format": "File Format",
       "image_format_values": {
@@ -181,6 +155,11 @@
         "-4300": "-4.3 EV",
         "-4700": "-4.7 EV",
         "-5000": "-5 EV"
+      },
+      "prioritize_saving_target": "Save photos preferentially to (takes effect on next launch)",
+      "prioritize_saving_target_values": {
+        "1": "SD Card",
+        "2": "USB Drive"
       },
       "SN": "Serial Number"
     }
