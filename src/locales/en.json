@@ -118,9 +118,7 @@
         "33": "Fluorescent WarmWhite",
         "34": "Fluorescent CoolWhite",
         "35": "Fluorescent DayWhite",
-        "36": "Fluorescent Daylight",
-        "1": "Underwater Auto",
-        "256": "ColorTemp"
+        "36": "Fluorescent Daylight"
       },
       "image_size": "Image Size",
       "image_size_values": {
